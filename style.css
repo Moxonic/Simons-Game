@@ -1,0 +1,43 @@
+body{
+    background-color: blueviolet;
+    
+}
+h1{
+    text-align: center;
+    padding: 5rem;
+}
+.container{
+    display: grid;
+    grid-template-areas: 
+        'green red'
+        'yellow blue';
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    width: 20rem;
+    height: 20rem;
+    background-color: black;
+    gap:10p;
+    margin: auto;
+    back
+    
+}
+button{
+
+}
+
+.red{
+    background-color: red;
+    grid-area: red;
+}
+.blue{
+    background-color: blue;
+    grid-area:blue;
+}
+.yellow{
+    background-color: yellow;
+    grid-area:yellow;
+}
+.green{
+    background-color: green;
+    grid-area: green;
+}

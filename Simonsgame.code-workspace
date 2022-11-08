@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "Simons Game",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Simons Game"
+	}
+}
