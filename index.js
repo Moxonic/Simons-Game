@@ -4,32 +4,32 @@ const green = document.querySelector(".green");
 const red = document.querySelector('.red');
 const yellow = document.querySelector('.yellow');
 const blue = document.querySelector('.blue');
-
 green.addEventListener("click", playOnClick);
 red.addEventListener("click", playOnClick);
 yellow.addEventListener("click", playOnClick);
 blue.addEventListener("click", playOnClick);
+
 let turnColorArray = [];
 let gameColorArray = [];
 let colors = ['green','red', 'yellow', 'blue']
+let level = 0;
 
     addRandomColor();
-    console.log('firstaddedColor:',gameColorArray);
-    playGameColorArray();
+console.log('first given:', gameColorArray);
+console.log('players Array:', turnColorArray);
 
-    const timer = ms => new Promise(res => setTimeout(res, ms))
-    async function playGameColorArray(){
-        for (let i = 0; i <gameColorArray.length; i++){
-            
-            let selectedSoundLocation = './sounds/'+gameColorArray[i]+'.mp3'; 
+    playNewColor();
+
+    
+    function playNewColor(){
+            let selectedSoundLocation = './sounds/'+gameColorArray[gameColorArray.length-1]+'.mp3'; 
             let elementPlayer = new Audio(selectedSoundLocation);
             elementPlayer.play();  
-            $('.'+gameColorArray[i]).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-            await TimeRanges(3000);
-        }
+            $('.'+gameColorArray[gameColorArray.length-1]).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     }
     
     function playOnClick(e) {
+       /*  playing the button */
         let pressedButtonColor = e.target.classList[1];
         let selectedSoundLocation = './sounds/'+pressedButtonColor+'.mp3' 
         let elementPlayer = new Audio(selectedSoundLocation);
@@ -37,31 +37,43 @@ let colors = ['green','red', 'yellow', 'blue']
         $('.'+pressedButtonColor).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
         turnColorArray.push(pressedButtonColor);
+        console.log('turnColorArray:',turnColorArray);
         compare();
-        addRandomColor();
-        console.log('gameColorArray after new',gameColorArray);
-        return turnColorArray;
+
+        if(turnColorArray.length===gameColorArray.length){
+            turnColorArray=[];
+            setTimeout(addRandomColor,1000);
+            setTimeout(playNewColor, 1000);
+            $('h2').html('Level:'+ level++);
+        };
+/*         only addRandomColor when turnColorArray is filled up
+ */       
+        console.log('gameColorArray:',gameColorArray);
     }
 
     function addRandomColor(){
         let randomNumber= Math.floor(Math.random()*4);
         let randomColor= colors[randomNumber];
         gameColorArray.push(randomColor);
-
     return gameColorArray;
     }
 
     function compare(){
-        if(turnColorArray[turnColorArray.length-1] === gameColorArray[gameColorArray.length-1]){
-            $('h1').html('Great!!!');
-            setTimeout(playGameColorArray, 1000);
-        } else {
+      /*   is each color in the turn array the same as the one in the postion in the game array? */
+        if(turnColorArray[turnColorArray.length-1] === gameColorArray[turnColorArray.length-1]){
+            $('h1').html('Keep going!');
+            console.log('added and lastinArray are the same');
+        }else{
             $('h1').html('ZONK!!!');
-        }
-    }
+            setTimeout(window.location.reload(),2000);
+        };
+        
+        if(turnColorArray.length===gameColorArray.length){
+        function reset(){
+            $('h1').html('Great!');
+            /* setTimeout(window.location.reload(),1000); */
+            console.log('gameArray.length has been reached')};
+        };
+    };
 
-    function repeater(){
-        /* play all array items with 1000 delay one after the other */
-        gameColorArray.map
-    }
 
