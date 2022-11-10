@@ -9,18 +9,24 @@ red.addEventListener("click", playOnClick);
 yellow.addEventListener("click", playOnClick);
 blue.addEventListener("click", playOnClick);
 
+let gameOver=false;
 let turnColorArray = [];
 let gameColorArray = [];
 let colors = ['green','red', 'yellow', 'blue']
 let level = 0;
 
-    addRandomColor();
+addRandomColor();
 console.log('first given:', gameColorArray);
 console.log('players Array:', turnColorArray);
-
-    playNewColor();
-
     
+
+    document.querySelector('.go_button').addEventListener('click',startGame);
+    function startGame(){
+        $('.go_button').addClass('invisible');
+        playNewColor();
+    }
+    
+
     function playNewColor(){
             let selectedSoundLocation = './sounds/'+gameColorArray[gameColorArray.length-1]+'.mp3'; 
             let elementPlayer = new Audio(selectedSoundLocation);
@@ -40,7 +46,7 @@ console.log('players Array:', turnColorArray);
         console.log('turnColorArray:',turnColorArray);
         compare();
 
-        if(turnColorArray.length===gameColorArray.length){
+        if(turnColorArray.length===gameColorArray.length && gameOver===false){
             turnColorArray=[];
             setTimeout(addRandomColor,1000);
             setTimeout(playNewColor, 1000);
@@ -61,17 +67,22 @@ console.log('players Array:', turnColorArray);
     function compare(){
       /*   is each color in the turn array the same as the one in the postion in the game array? */
         if(turnColorArray[turnColorArray.length-1] === gameColorArray[turnColorArray.length-1]){
-            $('h1').html('Keep going!');
+            $('h1').html('Repeat the sequence and add the new color');
             console.log('added and lastinArray are the same');
         }else{
-            $('h1').html('ZONK!!!');
-            setTimeout(window.location.reload(),2000);
+            $('h1').html('GAME OVER');
+            gameOver=true;
+            let failsound = new Audio ('./sounds/wrong.mp3')
+            failsound.play();
+            setTimeout(reload, 2000)
+            function reload(){
+                window.location.reload();
+            };
         };
         
         if(turnColorArray.length===gameColorArray.length){
         function reset(){
             $('h1').html('Great!');
-            /* setTimeout(window.location.reload(),1000); */
             console.log('gameArray.length has been reached')};
         };
     };
